@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Quartz;
-using Quartz.API;
 using Quartz.Impl.Matchers;
 
-
-namespace Saon.Tecoloco.EmailJobs.Api
+namespace Quartz.API.Controllers
 {
     [EnableCors("*","*","*")]
     public class JobsController : ApiController
@@ -20,6 +13,8 @@ namespace Saon.Tecoloco.EmailJobs.Api
 	{
             public string Name { get; set; }
             public string Schedule { get; set; }
+            public string Id { get; set; }
+            public string Group { get; set; }
 	}
 
         
@@ -31,24 +26,38 @@ namespace Saon.Tecoloco.EmailJobs.Api
             _scheduler = ConfigurationBuilder.CurrentScheduler;
         }
 
-        public HttpResponseMessage PostTriggerJob(string name)
+        public HttpResponseMessage PostTriggerJob(string id)
         {
-            JobKey jobKey = new JobKey(name);
+            JobKey jobKey = new JobKey(id);
 
-            var jobDetail = _scheduler.GetJobDetail(jobKey);
-            var trigger = _scheduler.GetTrigger(new TriggerKey("sfa"));
+  
             _scheduler.TriggerJob(jobKey);
 
             return new HttpResponseMessage();
         }
 
-        public IEnumerable<ProductDto> GetAllJobs()
+        public object GetAllJobs()
         {
             Quartz.Collection.ISet<JobKey> jobKeys = _scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(SchedulerConstants.DefaultGroup));
             var jobDetail = _scheduler.GetJobDetail(jobKeys.First());
             var triggerKeys = _scheduler.GetTriggerKeys(GroupMatcher<TriggerKey>.GroupEquals(SchedulerConstants.DefaultGroup));
 
-            return jobKeys.Select(key => new ProductDto() { Name = key.Name, Schedule = string.Join( ", ",_scheduler.GetTriggersOfJob(key).Select(trigger => trigger.StartTimeUtc.ToString())) }).ToList();
+            return
+                new
+            {
+                jobs = jobKeys.Select(key => 
+                    new ProductDto()
+                    {
+                        Name = key.Name, 
+                        Schedule = string.Join( ", ",_scheduler.GetTriggersOfJob(key).Select(trigger => trigger.StartTimeUtc.ToString())),
+                        Id= key.ToString(),
+                        Group = key.Group
+
+
+                    }).ToList()
+            }
+            ;
+
         } 
 
 

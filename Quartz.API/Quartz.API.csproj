@@ -87,7 +87,7 @@
     <Compile Include="ConfigurationBuilder.cs" />
     <Compile Include="Controllers\TriggersController.cs" />
     <Compile Include="IConfigurationBuilder.cs" />
-    <Compile Include="JobsController.cs" />
+    <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuartzAPI.cs" />
     <Compile Include="Startup.cs" />
