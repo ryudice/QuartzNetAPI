@@ -9,7 +9,7 @@ namespace Quartz.API
 {
     public static class QuartzAPI
     {
-        internal static IConfigurationBuilder ConfigurationBuilder { get; set; }
+        internal static ConfigurationBuilder ConfigurationBuilder { get; set; }
 
         static QuartzAPI()
         {

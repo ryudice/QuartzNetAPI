@@ -17,6 +17,9 @@ namespace Quartz.API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.MapHttpAttributeRoutes();
+
             config.Routes.MapHttpRoute("MyROute", "api/jobs/{name}/trigger", new {controller = "Jobs", action = "PostTriggerJob"});
 
             appBuilder.UseWebApi(config);

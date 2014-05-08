@@ -4,6 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Quartz.API.Contracts;
 
 namespace Quartz.API
 {
@@ -16,5 +17,6 @@ namespace Quartz.API
         void UseScheduler(IScheduler scheduler);
 
         void Validate();
+        void UseLogProvider(ILoggingProvider loggingProvider);
     }
 }

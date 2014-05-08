@@ -11,6 +11,7 @@ using Quartz.Impl.Triggers;
 namespace Quartz.API.Controllers
 {
     [EnableCors("*", "*", "*")]
+    [RoutePrefix("api/triggers")]
     public class TriggersController : ApiController
     {
         private IScheduler _scheduler;
@@ -21,7 +22,7 @@ namespace Quartz.API.Controllers
 
         }
 
-
+        [Route("{key}/resume")]
         public void PostRestartTrigger(string key)
         {
             _scheduler.ResumeTrigger(new TriggerKey(key));

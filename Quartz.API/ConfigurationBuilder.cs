@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Web.Http;
+using Quartz.API.Contracts;
 
 namespace Quartz.API
 {
     public class ConfigurationBuilder : IConfigurationBuilder
     {
+        private ILoggingProvider _loggingProvider;
         internal static IScheduler CurrentScheduler { get; private set; }
 
         internal static HttpConfiguration HttpConfiguration { get; set; }
 
 
+        internal ILoggingProvider GetLoggingProvider()
+        {
+            return _loggingProvider;
+        }
 
         static ConfigurationBuilder()
         {
@@ -30,6 +36,11 @@ namespace Quartz.API
         {
             get { return HttpConfiguration; }
             set { HttpConfiguration = value; }
+        }
+
+        public void UseLogProvider(ILoggingProvider loggingProvider)
+        {
+            _loggingProvider = loggingProvider;
         }
 
 

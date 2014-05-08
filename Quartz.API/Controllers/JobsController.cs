@@ -7,6 +7,7 @@ using Quartz.Impl.Matchers;
 namespace Quartz.API.Controllers
 {
     [EnableCors("*","*","*")]
+    [RoutePrefix("api/jobs")]
     public class JobsController : ApiController
     {
         public class ProductDto
@@ -26,6 +27,9 @@ namespace Quartz.API.Controllers
             _scheduler = ConfigurationBuilder.CurrentScheduler;
         }
 
+        [HttpPost]
+        [ActionName("trigger")]
+        [Route("{id}/trigger")]
         public HttpResponseMessage PostTriggerJob(string id)
         {
             JobKey jobKey = new JobKey(id);
@@ -50,7 +54,7 @@ namespace Quartz.API.Controllers
                     {
                         Name = key.Name, 
                         Schedule = string.Join( ", ",_scheduler.GetTriggersOfJob(key).Select(trigger => trigger.StartTimeUtc.ToString())),
-                        Id= key.ToString(),
+                        Id= key.Name.ToString(),
                         Group = key.Group
 
 

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Quartz.API")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Selfhosted Quartz.net administration API using WebAPI and OWIN.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Roberto Yudice")]
 [assembly: AssemblyProduct("Quartz.API")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.*")]
+[assembly: AssemblyFileVersion("1.0.0.*")]
