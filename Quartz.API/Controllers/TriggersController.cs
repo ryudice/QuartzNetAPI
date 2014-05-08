@@ -44,7 +44,7 @@ namespace Quartz.API.Controllers
 
                 return new TriggerDto
                 {
-                    Id = trigger.Key.ToString(),
+                    Id = trigger.Key.Name.ToString(),
                     Name = trigger.Key.Name,
                     Job = trigger.JobKey.ToString(),
                     CronExpression= cronExpression,
