@@ -1,4 +1,4 @@
-QuatzNetAPI
+QuartzNetAPI
 ===========
 
 Pluggable management API using OWIN and Web API for Quartz.NET
@@ -14,4 +14,26 @@ QuartzAPI.Configure(builder =>
 QuartzAPI.Start("http://localhost:9001/");
 
 
+```
+
+API
+===========
+
+Sample Output
+------------------
+*/api/triggers*
+
+```
+{
+    "triggers": [
+        {
+            "State": "Normal",
+            "Job": "DEFAULT.UpdateJobs",
+            "Name": "UpdateJobsTrigger",
+            "CronExpression": "0 0/5 * * * ?",
+            "Id": "DEFAULT.UpdateJobsTrigger",
+            "Group": "DEFAULT"
+        }
+    ]
+}
 ```
