@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -25,7 +26,25 @@ namespace Quartz.API.Controllers
         [Route("{key}/resume")]
         public void PostRestartTrigger(string key)
         {
-            _scheduler.ResumeTrigger(new TriggerKey(key));
+            var triggerKey = new TriggerKey(key);
+            var trigger = _scheduler.GetTrigger(triggerKey);
+            if (trigger == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            _scheduler.ResumeTrigger(triggerKey);
+        }
+
+
+        [Route("{key}/pause")]
+        public void PostStopTrigger(string key)
+        {
+            var triggerKey = new TriggerKey(key);
+            var trigger = _scheduler.GetTrigger(triggerKey);
+            
+            if (trigger == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            _scheduler.PauseTrigger(triggerKey);
+            
         }
 
         public object GetAllTriggers()
