@@ -1,4 +1,8 @@
 ﻿using System.Web.Http;
+using Microsoft.Owin;
+using Microsoft.Owin.BuilderProperties;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
 using Owin;
 
 namespace Quartz.API
@@ -10,19 +14,34 @@ namespace Quartz.API
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder appBuilder)
         {
-            // Configure Web API for self-host. 
+
+                        // Configure Web API for self-host. 
             HttpConfiguration config = ConfigurationBuilder.HttpConfiguration;
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute("MyROute", "api/jobs/{name}/trigger", new {controller = "Jobs", action = "PostTriggerJob"});
+            config.Routes.MapHttpRoute("MyROute", "jobs/{name}/trigger", new {controller = "Jobs", action = "PostTriggerJob"});
 
-            appBuilder.UseWebApi(config);
+
+            appBuilder.UseFileServer(new FileServerOptions()
+            {
+                FileSystem = new PhysicalFileSystem("./Assets/assets"),
+                RequestPath = new PathString("/assets")
+            });
+
+            appBuilder.Map("/nancy", builder => builder.UseNancy());
+
+            appBuilder.Map("/api", builder => builder.UseWebApi(config));
+
+            
+
+
+            //appBuilder.UseWebApi(config);
         }
     } 
 }

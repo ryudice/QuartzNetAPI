@@ -61,11 +61,15 @@ namespace Quartz.API.Controllers
                 if (trigger is CronTriggerImpl)
                     cronExpression = ((CronTriggerImpl) trigger).CronExpressionString;
 
+               
+
                 return new TriggerDto
                 {
                     Id = trigger.Key.Name.ToString(),
                     Name = trigger.Key.Name,
+                    Description = trigger.Description,
                     Job = trigger.JobKey.ToString(),
+                    PreviousFireTime=  trigger.GetPreviousFireTimeUtc(),
                     CronExpression= cronExpression,
                     State = _scheduler.GetTriggerState(key).ToString(),
                     Group= trigger.Key.Group
@@ -85,5 +89,7 @@ namespace Quartz.API.Controllers
         public string CronExpression { get; set; }
         public string Id { get; set; }
         public string Group { get; set; }
+        public string Description { get; set; }
+        public DateTimeOffset? PreviousFireTime { get; set; }
     }
 }
