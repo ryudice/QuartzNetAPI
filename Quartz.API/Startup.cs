@@ -34,7 +34,8 @@ namespace Quartz.API
                 RequestPath = new PathString("/assets")
             });
 
-            appBuilder.Map("/nancy", builder => builder.UseNancy());
+            
+            appBuilder.Map("/quartzadmin", builder => builder.UseNancy());
 
             appBuilder.Map("/api", builder => builder.UseWebApi(config));
 
